@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 
 ## ----setup, echo=FALSE--------------------------------------------------------
 library(DSjobtracker)
-data("DStidy")
+data("DStidy_2020")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # install devtools if not already installed
@@ -19,13 +19,13 @@ data("DStidy")
 #  library(DSjobtracker)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  data("DStidy")
+#  data("DStidy_2020")
 
 ## -----------------------------------------------------------------------------
-tibble::glimpse(DStidy)
+tibble::glimpse(DStidy_2020)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ?DStidy
+#  ?DStidy_2020
 
 ## ----warning=FALSE,message=FALSE,dev='png'------------------------------------
 library(tidyr)
@@ -38,7 +38,7 @@ library(forcats)
 
 theme_set(theme_minimal())
 
-skills_long <- DStidy %>%
+skills_long <- DStidy_2020 %>%
   select(c(R:Bahasa_Malaysia)) %>%
   pivot_longer(c(R:Bahasa_Malaysia), values_to = "Value", names_to = "Name") %>%
   mutate(Value = as.numeric(levels(Value))[Value]) %>%
@@ -84,7 +84,7 @@ not_software_columns <- c(
 )
 
 ## -----------------------------------------------------------------------------
-indicators <- DStidy %>%
+indicators <- DStidy_2020 %>%
   select(c(R:Bahasa_Malaysia))
 software_indicators <- indicators %>%
   select(colnames(.)[!colnames(.) %in% not_software_columns])
@@ -105,7 +105,7 @@ fontFamily = "Montserrat"
 )
 
 ## -----------------------------------------------------------------------------
-count_data <- DStidy %>%
+count_data <- DStidy_2020 %>%
   select(Experience_Category, Edu_Category) %>%
   filter(!is.na(Edu_Category)) %>%
   count(Experience_Category, Edu_Category)
@@ -142,7 +142,7 @@ count_data %>%
 
 ## ----fig.height=14------------------------------------------------------------
 # radar plot with job category and skills in a radar
-job_skill_data <- DStidy %>% 
+job_skill_data <- DStidy_2020 %>% 
   select(R:Bahasa_Malaysia,Job_Category) %>% 
   filter(Job_Category != "Unimportant") %>% 
   pivot_longer(c(R:Bahasa_Malaysia),names_to="Name",values_to = "Value") %>%
